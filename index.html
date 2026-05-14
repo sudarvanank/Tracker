@@ -251,7 +251,7 @@ body{
 .co-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:var(--r);padding:14px 16px;
-  transition:all .2s;cursor:default;
+  transition:all .2s;
   animation:fadeUp .5s ease both;
 }
 .co-card:hover{border-color:var(--subtle);background:var(--surface2);transform:translateY(-1px)}
@@ -383,7 +383,7 @@ body{
   <div id="phases-container"></div>
 
   <div class="section-divider" style="animation-delay:.3s;margin-top:40px">
-    <h2>Target Companies</h2>
+    <h2>Target Companies (Click to view Interview Prep)</h2>
     <div class="divider-line"></div>
   </div>
 
@@ -567,16 +567,16 @@ const PHASES_DATA = [
 ];
 
 const COMPANIES = [
-  {name:'CRED',role:'iOS Developer',ctc:'24–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
-  {name:'Razorpay',role:'Mobile Engineer',ctc:'22–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
-  {name:'PhonePe',role:'iOS Developer',ctc:'22–32 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
-  {name:'Swiggy',role:'iOS Developer',ctc:'22–30 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
-  {name:'Flipkart',role:'iOS Engineer',ctc:'22–32 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
-  {name:'Zomato',role:'iOS Developer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
-  {name:'BookMyShow',role:'iOS Developer',ctc:'18–28 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
-  {name:'Dream11',role:'Mobile Engineer',ctc:'20–30 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
-  {name:'MakeMyTrip',role:'iOS Developer',ctc:'18–26 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
-  {name:'Meesho',role:'iOS Engineer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
+  {name:'CRED',role:'iOS Developer',ctc:'24–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=CRED%20iOS'},
+  {name:'Razorpay',role:'Mobile Engineer',ctc:'22–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Razorpay%20iOS'},
+  {name:'PhonePe',role:'iOS Developer',ctc:'22–32 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=PhonePe%20iOS'},
+  {name:'Swiggy',role:'iOS Developer',ctc:'22–30 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Swiggy%20iOS'},
+  {name:'Flipkart',role:'iOS Engineer',ctc:'22–32 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Flipkart%20iOS'},
+  {name:'Zomato',role:'iOS Developer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Zomato%20iOS'},
+  {name:'BookMyShow',role:'iOS Developer',ctc:'18–28 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507', link:'https://www.glassdoor.co.in/Interview/BookMyShow-iOS-Developer-Interview-Questions-EI_IE514088.0,10_KO11,24.htm'},
+  {name:'Dream11',role:'Mobile Engineer',ctc:'20–30 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Dream11%20iOS'},
+  {name:'MakeMyTrip',role:'iOS Developer',ctc:'18–26 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=MakeMyTrip%20iOS'},
+  {name:'Meesho',role:'iOS Engineer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419', link:'https://leetcode.com/discuss/interview-experience?currentPage=1&orderBy=hot&query=Meesho%20iOS'},
 ];
 
 const API_URL = "https://script.google.com/macros/s/AKfycbzF_UzJkiS_F_epR1vbTRpj7ImY1H1gTHgTiAhCYBh9keE9F8InbLzezMFXFJ7Jb-wZ/exec";
@@ -716,10 +716,15 @@ function renderWeek(week, phase){
 
 function renderCompanies(){
   const grid = document.getElementById('companies-grid');
+  grid.innerHTML = '';
+  
   COMPANIES.forEach((co,i)=>{
     const card = document.createElement('div');
     card.className='co-card';
     card.style.animationDelay=(0.35+i*0.05)+'s';
+    card.style.cursor='pointer'; 
+    card.onclick = () => window.open(co.link, '_blank');
+    
     card.innerHTML=`
       <div><span class="co-tier" style="background:${co.tb};color:${co.tc}">${co.tier}</span></div>
       <div class="co-name">${co.name}</div>
