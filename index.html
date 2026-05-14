@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📱 iOS Dev Roadmap — 24 LPA</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.1.1/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dm-sans@5.1.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dm-sans@5.1.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5.1.0/400.css">
+<style>
+:root{
+  --bg:#0d0d10;--surface:#16161a;--surface2:#1e1e24;--border:#2a2a32;
+  --text:#e8e8ed;--muted:#71717a;--subtle:#3f3f46;
+  --p1:#a78bfa;--p1b:#1e1433;--p1t:#7c3aed;
+  --p2:#34d399;--p2b:#0d2419;--p2t:#059669;
+  --p3:#fb923c;--p3b:#261507;--p3t:#ea580c;
+  --p4:#60a5fa;--p4b:#0d1f3d;--p4t:#2563eb;
+  --p5:#fbbf24;--p5b:#261d07;--p5t:#d97706;
+  --green:#4ade80;--greenb:#0f2318;
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-size:15px;line-height:1.65;
+  min-height:100vh;
+}
+
+/* ── COVER ─────────────────────────────────────────────── */
+.cover{
+  height:280px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0f1033 0%,#1a0a2e 25%,#0d1f3d 50%,#1a0f33 75%,#0f1a2e 100%);
+  background-size:400% 400%;
+  animation:bgShift 10s ease infinite;
+}
+@keyframes bgShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.cover-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 60%,rgba(167,139,250,0.18) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 60% at 75% 30%,rgba(52,211,153,0.1) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 50% 80%,rgba(96,165,250,0.08) 0%,transparent 60%);
+  animation:glowPulse 6s ease-in-out infinite alternate;
+}
+@keyframes glowPulse{
+  from{opacity:.7}to{opacity:1}
+}
+.cover-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(167,139,250,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(167,139,250,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.cover-emoji{
+  position:absolute;bottom:32px;left:48px;
+  font-size:52px;
+  filter:drop-shadow(0 0 24px rgba(167,139,250,.5));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+.page{max-width:860px;margin:0 auto;padding:0 48px 100px}
+
+.page-title{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:36px;line-height:1.2;
+  margin-top:28px;margin-bottom:20px;
+  background:linear-gradient(135deg,#e8e8ed 30%,#a78bfa 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:fadeUp .6s ease both;
+}
+
+.props{
+  border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;margin-bottom:32px;
+  animation:fadeUp .6s ease .1s both;
+}
+.prop-row{
+  display:flex;align-items:center;gap:0;
+  border-bottom:1px solid var(--border);
+}
+.prop-row:last-child{border-bottom:none}
+.prop-key{
+  width:180px;flex-shrink:0;padding:9px 16px;
+  font-size:13px;color:var(--muted);
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.prop-key i{font-style:normal;font-size:14px}
+.prop-val{
+  flex:1;padding:9px 16px;font-size:14px;
+  background:var(--bg);
+}
+.prop-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;
+}
+
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-bottom:36px;
+  animation:fadeUp .6s ease .2s both;
+}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;
+  transition:border-color .2s,background .2s;
+}
+.stat-card:hover{background:var(--surface2);border-color:var(--subtle)}
+.stat-n{font-size:26px;font-weight:500;line-height:1;margin-bottom:4px}
+.stat-l{font-size:12px;color:var(--muted)}
+
+.section-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:32px 0 16px;
+  animation:fadeUp .5s ease both;
+}
+.section-divider h2{
+  font-family:'Playfair Display',serif;
+  font-size:20px;color:var(--text);white-space:nowrap;
+}
+.divider-line{flex:1;height:1px;background:var(--border)}
+
+.phase-block{
+  border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;margin-bottom:12px;
+  transition:border-color .25s;
+  animation:fadeUp .5s ease both;
+}
+.phase-block:hover{border-color:var(--subtle)}
+
+.phase-header{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 20px;cursor:pointer;
+  user-select:none;transition:background .2s;
+  position:relative;
+}
+.phase-header:hover{background:var(--surface)}
+.phase-header::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;border-radius:2px;
+}
+
+.ph-icon{width:36px;height:36px;border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ph-meta{flex:1;min-width:0}
+.ph-name{font-weight:500;font-size:15px}
+.ph-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.ph-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ph-pct{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
+.ph-bar-wrap{width:80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.ph-bar{height:100%;border-radius:3px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.ph-chevron{font-size:16px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+.phase-block.open .ph-chevron{transform:rotate(90deg)}
+
+.phase-body{display:none;border-top:1px solid var(--border)}
+.phase-block.open .phase-body{display:block}
+
+.week-section{border-bottom:1px solid var(--border)}
+.week-section:last-child{border-bottom:none}
+
+.week-header{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 20px 11px 24px;cursor:pointer;
+  transition:background .15s;
+}
+.week-header:hover{background:var(--surface2)}
+.wk-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--muted);background:var(--surface2);
+  padding:2px 7px;border-radius:4px;flex-shrink:0;
+  border:1px solid var(--border);
+}
+.wk-label{font-size:13px;font-weight:500;flex:1}
+.wk-done{font-size:12px;color:var(--muted)}
+.wk-chevron{font-size:13px;color:var(--muted);transition:transform .25s;flex-shrink:0}
+.week-section.open .wk-chevron{transform:rotate(90deg)}
+
+.week-tasks{display:none;padding:4px 0 12px 24px}
+.week-section.open .week-tasks{display:block}
+
+.task-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:7px 20px 7px 0;
+  border-radius:var(--r-sm);
+  transition:background .15s;cursor:pointer;
+  margin:1px 0;
+}
+.task-row:hover{background:var(--surface2)}
+
+.task-cb{
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;
+  border:1.5px solid var(--subtle);margin-top:2px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+  font-size:11px;color:transparent;
+}
+.task-row.done .task-cb{
+  background:var(--green);border-color:var(--green);
+  color:#052e16;font-weight:700;
+  transform:scale(1.1);
+}
+.task-text{font-size:13.5px;line-height:1.5;flex:1}
+.task-row.done .task-text{
+  color:var(--muted);text-decoration:line-through;
+  text-decoration-color:var(--subtle);
+}
+.task-badge{
+  font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;
+  flex-shrink:0;margin-top:3px;
+}
+
+.confetti-container{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:9999;overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;top:-10px;width:10px;height:10px;
+  border-radius:2px;animation:fall 2.5s ease-in forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1}
+  100%{transform:translateY(105vh) rotate(720deg);opacity:0}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes checkPop{
+  0%{transform:scale(0)}
+  70%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+.task-cb.pop{animation:checkPop .3s cubic-bezier(.34,1.56,.64,1)}
+
+.company-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.co-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px 16px;
+  transition:all .2s;cursor:default;
+  animation:fadeUp .5s ease both;
+}
+.co-card:hover{border-color:var(--subtle);background:var(--surface2);transform:translateY(-1px)}
+.co-name{font-size:14px;font-weight:500;margin-bottom:4px}
+.co-role{font-size:12px;color:var(--muted);margin-bottom:8px}
+.co-ctc{font-size:13px;font-weight:500}
+.co-tier{
+  font-size:10px;font-weight:500;padding:2px 8px;
+  border-radius:10px;display:inline-block;margin-bottom:6px;
+}
+
+.progress-section{
+  text-align:center;padding:24px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  margin-bottom:36px;
+  animation:fadeUp .6s ease .15s both;
+}
+.progress-ring-wrap{position:relative;display:inline-block;margin-bottom:12px}
+.progress-ring-label{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;
+}
+.ring-pct{font-size:28px;font-weight:500;line-height:1}
+.ring-sub{font-size:11px;color:var(--muted)}
+
+.callout{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px 18px;
+  display:flex;gap:12px;align-items:flex-start;
+  margin:20px 0;font-size:13.5px;
+  animation:fadeUp .5s ease both;
+}
+.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--subtle)}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-glow"></div>
+  <div class="cover-emoji">📱</div>
+</div>
+
+<div class="page">
+  <h1 class="page-title">iOS Developer Roadmap — Road to 24 LPA</h1>
+
+  <div class="props" style="animation-delay:.05s">
+    <div class="prop-row">
+      <div class="prop-key"><i>🎯</i> Target CTC</div>
+      <div class="prop-val"><span class="prop-badge" style="background:#1e1433;color:#a78bfa">₹24,00,000 / year</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-key"><i>⏱</i> Duration</div>
+      <div class="prop-val"><span class="prop-badge" style="background:#0d1f3d;color:#60a5fa">3–5 months · 140 days</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-key"><i>🏙</i> Target city</div>
+      <div class="prop-val"><span class="prop-badge" style="background:#0d2419;color:#34d399">Bengaluru</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-key"><i>🛠</i> Stack</div>
+      <div class="prop-val" style="font-family:'DM Mono',monospace;font-size:13px;color:#a78bfa">Swift · SwiftUI · Firebase · Razorpay · MapKit</div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-key"><i>📅</i> Start date</div>
+      <div class="prop-val" id="start-date-display" style="color:var(--muted);cursor:pointer" onclick="setStartDate()">Click to set start date →</div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-key"><i>✅</i> Overall progress</div>
+      <div class="prop-val" id="overall-progress-text">0 / 100 tasks completed</div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-n" id="stat-done" style="color:#a78bfa">0</div>
+      <div class="stat-l">tasks completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n" id="stat-weeks" style="color:#34d399">0</div>
+      <div class="stat-l">weeks in progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n" id="stat-pct" style="color:#fb923c">0%</div>
+      <div class="stat-l">roadmap complete</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n" id="stat-proj" style="color:#60a5fa">4</div>
+      <div class="stat-l">portfolio projects</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-ring-wrap">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#2a2a32" stroke-width="8"/>
+        <circle id="ring-circle" cx="60" cy="60" r="50" fill="none" stroke="#a78bfa" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"
+          transform="rotate(-90 60 60)"
+          style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+      </svg>
+      <div class="progress-ring-label">
+        <div class="ring-pct" id="ring-pct">0%</div>
+        <div class="ring-sub">done</div>
+      </div>
+    </div>
+    <div style="font-size:14px;color:var(--muted)">Tap tasks below to mark complete · progress saves automatically</div>
+    <button onclick="resetProgress()" style="margin-top:15px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px">Reset All Progress</button>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">💡</div>
+    <div>
+      <strong style="font-size:14px">Your unfair advantage:</strong>
+      You're building <strong>ShowBook</strong> — a live BookMyShow clone with Razorpay, Firestore, and seat selection. Walk into any interview with a TestFlight link.
+    </div>
+  </div>
+
+  <div class="section-divider" style="animation-delay:.25s">
+    <h2>The 5 Phases</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <div id="phases-container"></div>
+
+  <div class="section-divider" style="animation-delay:.3s;margin-top:40px">
+    <h2>Target Companies</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="company-grid" id="companies-grid"></div>
+</div>
+
+<div class="confetti-container" id="confetti"></div>
+
+<script>
+const PHASES_DATA = [
+  {
+    id:1, emoji:'⚡', name:'Swift + SwiftUI Foundations', months:'Month 1',weeks:'Weeks 1–4',
+    color:'var(--p1)',bg:'var(--p1b)',border:'var(--p1t)',
+    weeks_data:[
+      {n:1,label:'Swift Language Core',tasks:[
+        'Swift: Optionals, variables, control flow',
+        'Swift: Closures, functions, higher-order functions',
+        'Swift: Structs vs Classes — value vs reference types',
+        'Swift: Protocols, extensions, generics basics',
+        'Swift: Enums with associated values, error handling',
+      ]},
+      {n:2,label:'SwiftUI Fundamentals',tasks:[
+        'SwiftUI: Views, Text, Image, Button basics',
+        'SwiftUI: HStack, VStack, ZStack, Spacers',
+        'SwiftUI: @State and @Binding — understand deeply',
+        'SwiftUI: List, ForEach, NavigationStack',
+        'SwiftUI: Sheets, Alerts, Confirmation Dialogs',
+      ]},
+      {n:3,label:'SwiftUI + SwiftData',tasks:[
+        'SwiftUI: Forms, TextField, Picker, Toggle',
+        'SwiftUI: Custom ViewModifiers + reusable components',
+        'SwiftUI: Basic animations and transitions',
+        'SwiftData: CRUD operations and persistence',
+        '🏗 PROJECT 1 START: Tasks App — CRUD + Navigation',
+      ]},
+      {n:4,label:'Project 1 Complete',tasks:[
+        '🏗 PROJECT 1: SwiftData persistence',
+        '🏗 PROJECT 1: Polish UI · dark mode · app icon',
+        '🏗 PROJECT 1: Push to GitHub with README',
+        '100 Days of SwiftUI — revision + fill gaps',
+        'Week 4 review: quiz yourself on all concepts',
+      ]},
+    ]
+  },
+  {
+    id:2, emoji:'🏗', name:'Architecture + Networking', months:'Month 2',weeks:'Weeks 5–8',
+    color:'var(--p2)',bg:'var(--p2b)',border:'var(--p2t)',
+    weeks_data:[
+      {n:5,label:'MVVM Architecture',tasks:[
+        'MVVM: ViewModel separation + responsibilities',
+        '@ObservableObject, @StateObject, @EnvironmentObject',
+        '@Observable macro (Swift 5.9+)',
+        'Dependency injection in SwiftUI apps',
+        'Refactor Project 1 into clean MVVM',
+      ]},
+      {n:6,label:'Async/Await + Networking',tasks:[
+        'async/await syntax and Task{}',
+        'Actors and structured concurrency',
+        'URLSession + Codable for REST APIs',
+        'Error handling in async code',
+        'JSON decoding with nested models',
+      ]},
+      {n:7,label:'Project 2 Build',tasks:[
+        'AsyncImage for remote image loading',
+        'Pagination / infinite scroll pattern',
+        '🏗 PROJECT 2 START: Events Browser (TMDB API)',
+        '🏗 PROJECT 2: Search + Filter functionality',
+        '🏗 PROJECT 2: Detail screen + async data',
+      ]},
+      {n:8,label:'Project 2 + Testing',tasks:[
+        '🏗 PROJECT 2: Loading skeletons + error states',
+        '🏗 PROJECT 2: Push to GitHub with README',
+        'Read Apple Human Interface Guidelines',
+        'Unit Testing basics — XCTest',
+        'Week 8 review: mock 5 interview questions',
+      ]},
+    ]
+  },
+  {
+    id:3, emoji:'🔥', name:'Firebase + Maps + Payments', months:'Month 3',weeks:'Weeks 9–12',
+    color:'var(--p3)',bg:'var(--p3b)',border:'var(--p3t)',
+    weeks_data:[
+      {n:9,label:'Firebase Backend',tasks:[
+        'Firebase: project setup + iOS SDK install',
+        'Firebase Auth: Email + Google Sign-In',
+        'Firebase Auth: Phone OTP (India flows)',
+        'Firestore: Read · Write · Update · Delete',
+        'Firestore: Real-time listeners + snapshots',
+      ]},
+      {n:10,label:'Maps + Location',tasks:[
+        'Firebase Storage: Image upload + download URL',
+        'Firebase Security Rules basics',
+        'MapKit: Map view in SwiftUI + annotations',
+        'CoreLocation: User location + geocoding',
+        'MapKit: Custom markers + region search',
+      ]},
+      {n:11,label:'Razorpay + Notifications',tasks:[
+        'Razorpay iOS SDK: setup + integration',
+        'Razorpay: Order creation + payment flow',
+        'Razorpay: Success, failure, refund handling',
+        'APNs setup in Xcode + push capabilities',
+        'Firebase Cloud Messaging (FCM) integration',
+      ]},
+      {n:12,label:'Project 3 Complete',tasks:[
+        'Local notifications: UNUserNotificationCenter',
+        '🏗 PROJECT 3 START: Event Booking mini-app',
+        '🏗 PROJECT 3: Booking confirmation + push notif',
+        '🏗 PROJECT 3: Polish and push to GitHub',
+        'Review all Phase 1–3 · fix weak areas',
+      ]},
+    ]
+  },
+  {
+    id:4, emoji:'🎯', name:'ShowBook — BMS Clone (Capstone)', months:'Month 4',weeks:'Weeks 13–16',
+    color:'var(--p4)',bg:'var(--p4b)',border:'var(--p4t)',
+    weeks_data:[
+      {n:13,label:'ShowBook Foundation',tasks:[
+        'ShowBook: Design screens + flows in Figma',
+        'ShowBook: Firebase schema design',
+        'ShowBook: Xcode project setup · folders · targets',
+        'ShowBook: City selection + home screen',
+        'ShowBook: Browse events by category',
+      ]},
+      {n:14,label:'ShowBook Core Features',tasks:[
+        'ShowBook: Event detail screen + AVKit trailer',
+        'ShowBook: Custom seat map UI (SwiftUI grid)',
+        'ShowBook: Seat availability from Firestore (live)',
+        'ShowBook: Seat lock countdown timer',
+        'ShowBook: Search + filter (location · date · price)',
+      ]},
+      {n:15,label:'ShowBook Checkout',tasks:[
+        'ShowBook: Razorpay checkout integration',
+        'ShowBook: Booking confirmation screen',
+        'ShowBook: QR code e-ticket generation',
+        'ShowBook: My Tickets / booking history',
+        'ShowBook: Profile screen + auth flow',
+      ]},
+      {n:16,label:'ShowBook Launch',tasks:[
+        'ShowBook: Dark mode + accessibility pass',
+        'ShowBook: Loading skeletons + empty states',
+        'ShowBook: Hero transitions + booking confetti',
+        'ShowBook: TestFlight build — 3 beta testers',
+        'ShowBook: GitHub push · README · demo GIF',
+      ]},
+    ]
+  },
+  {
+    id:5, emoji:'💼', name:'Interview Prep + Job Hunt', months:'Month 5',weeks:'Weeks 17–20',
+    color:'var(--p5)',bg:'var(--p5b)',border:'var(--p5t)',
+    weeks_data:[
+      {n:17,label:'iOS Deep Concepts',tasks:[
+        'Memory: ARC, retain cycles, weak/unowned',
+        'App lifecycle + Scene lifecycle deep dive',
+        'View lifecycle: onAppear · re-render triggers',
+        'GCD vs async/await — interview deep dive',
+        'URLCache · background tasks · silent push',
+      ]},
+      {n:18,label:'LeetCode Sprint',tasks:[
+        'LeetCode: 10 Easy — arrays + strings (Swift)',
+        'LeetCode: 10 Medium — HashMap + Two Pointer',
+        'LeetCode: 5 Stack / Queue problems in Swift',
+        'LeetCode: 5 Tree traversal (DFS/BFS)',
+        'Big-O notation: time + space complexity',
+      ]},
+      {n:19,label:'System Design + Prep',tasks:[
+        'System design: Design Instagram Feed (iOS)',
+        'System design: Offline-first + caching patterns',
+        'System design: Firebase schema trade-offs',
+        'Prepare 5-min ShowBook live demo script',
+        'Update LinkedIn + resume with all 4 projects',
+      ]},
+      {n:20,label:'Apply + Interview',tasks:[
+        'Apply: Swiggy · Zomato · CRED',
+        'Apply: Flipkart · Meesho · PhonePe · Razorpay',
+        'Apply: BookMyShow · MakeMyTrip · Cleartrip',
+        'Apply: 3 high-growth startups (Series A/B)',
+        'Mock interview with peer/mentor + feedback',
+      ]},
+    ]
+  },
+];
+
+const COMPANIES = [
+  {name:'CRED',role:'iOS Developer',ctc:'24–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
+  {name:'Razorpay',role:'Mobile Engineer',ctc:'22–35 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
+  {name:'PhonePe',role:'iOS Developer',ctc:'22–32 LPA',tier:'Dream',tc:'#a78bfa',tb:'#1e1433'},
+  {name:'Swiggy',role:'iOS Developer',ctc:'22–30 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
+  {name:'Flipkart',role:'iOS Engineer',ctc:'22–32 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
+  {name:'Zomato',role:'iOS Developer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
+  {name:'BookMyShow',role:'iOS Developer',ctc:'18–28 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
+  {name:'Dream11',role:'Mobile Engineer',ctc:'20–30 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
+  {name:'MakeMyTrip',role:'iOS Developer',ctc:'18–26 LPA',tier:'Domain fit',tc:'#fb923c',tb:'#261507'},
+  {name:'Meesho',role:'iOS Engineer',ctc:'20–28 LPA',tier:'Tier 2',tc:'#34d399',tb:'#0d2419'},
+];
+
+const API_URL = "https://script.google.com/macros/s/AKfycbzF_UzJkiS_F_epR1vbTRpj7ImY1H1gTHgTiAhCYBh9keE9F8InbLzezMFXFJ7Jb-wZ/exec";
+
+let STATE = {};
+
+// ── SYNC LOGIC ───────────────────────────────────────────────────
+
+async function loadState() {
+  const loadingEl = document.getElementById('overall-progress-text');
+  const originalText = loadingEl.textContent;
+  loadingEl.textContent = "🔄 Syncing from cloud...";
+
+  try {
+    const response = await fetch(API_URL);
+    const cloudState = await response.json();
+    STATE = cloudState;
+
+    if (Object.keys(STATE).length === 0) {
+      const local = localStorage.getItem('ios_roadmap_state');
+      if (local) STATE = JSON.parse(local);
+    }
+
+    const savedStart = localStorage.getItem('ios_roadmap_start');
+    if (savedStart) {
+      document.getElementById('start-date-display').textContent = savedStart;
+      document.getElementById('start-date-display').style.color = 'var(--text)';
+    }
+
+    renderPhases();
+    updateStats();
+    loadingEl.textContent = originalText;
+  } catch (e) {
+    console.error("Sync failed:", e);
+    loadingEl.textContent = "❌ Sync Error (Check your internet or Apps Script deployment)";
+  }
+}
+
+async function saveState() {
+  localStorage.setItem('ios_roadmap_state', JSON.stringify(STATE));
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(STATE),
+      mode: 'no-cors' 
+    });
+  } catch (e) {
+    console.error("Cloud save failed:", e);
+  }
+}
+
+// ── UI LOGIC ─────────────────────────────────────────────────────
+
+function setStartDate() {
+  const d = prompt('Enter your start date (e.g. 16 May 2025):');
+  if (!d) return;
+  document.getElementById('start-date-display').textContent = d;
+  document.getElementById('start-date-display').style.color = 'var(--text)';
+  localStorage.setItem('ios_roadmap_start', d);
+}
+
+function resetProgress() {
+  if (confirm("Clear all progress? This will wipe cloud and local data.")) {
+    STATE = {};
+    saveState();
+    localStorage.removeItem('ios_roadmap_state');
+    location.reload();
+  }
+}
+
+function renderPhases(){
+  const container = document.getElementById('phases-container');
+  container.innerHTML = '';
+  PHASES_DATA.forEach((phase, pi) => {
+    const block = document.createElement('div');
+    block.className = 'phase-block';
+    block.style.animationDelay = (0.3 + pi*0.08)+'s';
+
+    const totalTasks = phase.weeks_data.reduce((s,w)=>s+w.tasks.length,0);
+    const doneTasks  = phase.weeks_data.reduce((s,w)=>
+      s + w.tasks.filter((_,ti)=>STATE[`p${phase.id}_w${w.n}_t${ti}`]).length, 0);
+    const pct = Math.round(doneTasks/totalTasks*100) || 0;
+
+    block.innerHTML = `
+    <div class="phase-header" style="background:${phase.bg}" onclick="togglePhase(this)">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${phase.color};border-radius:2px"></div>
+      <div class="ph-icon" style="background:${phase.bg};border:1px solid ${phase.border}">${phase.emoji}</div>
+      <div class="ph-meta">
+        <div class="ph-name">${phase.name}</div>
+        <div class="ph-sub">${phase.months} · ${phase.weeks} · ${totalTasks} tasks</div>
+      </div>
+      <div class="ph-right">
+        <div>
+          <div class="ph-pct" style="color:${phase.color}">${pct}%</div>
+          <div class="ph-bar-wrap" style="margin-top:5px">
+            <div class="ph-bar" style="background:${phase.color};width:0" data-target="${pct}"></div>
+          </div>
+        </div>
+        <div class="ph-chevron" style="color:${phase.color}">▶</div>
+      </div>
+    </div>
+    <div class="phase-body" id="phase-body-${phase.id}">
+      ${phase.weeks_data.map(w=>renderWeek(w,phase)).join('')}
+    </div>`;
+
+    container.appendChild(block);
+  });
+}
+
+function renderWeek(week, phase){
+  const doneTasks = week.tasks.filter((_,ti)=>STATE[`p${phase.id}_w${week.n}_t${ti}`]).length;
+  const wk_done_class = doneTasks===week.tasks.length ? 'style="color:var(--green)"' : '';
+  return `
+  <div class="week-section" id="week-${phase.id}-${week.n}">
+    <div class="week-header" onclick="toggleWeek(${phase.id},${week.n})">
+      <span class="wk-num">W${week.n}</span>
+      <span class="wk-label">${week.label}</span>
+      <span class="wk-done" ${wk_done_class} id="wk-done-${phase.id}-${week.n}">${doneTasks}/${week.tasks.length}</span>
+      <span class="wk-chevron" style="color:${phase.color}">▶</span>
+    </div>
+    <div class="week-tasks">
+      ${week.tasks.map((task,ti)=>{
+        const key=`p${phase.id}_w${week.n}_t${ti}`;
+        const done=!!STATE[key];
+        const isProject = task.includes('PROJECT') || task.includes('ShowBook') || task.includes('🏗');
+        return `<div class="task-row${done?' done':''}" id="task-${key}"
+          onclick="toggleTask('${key}','${phase.id}','${week.n}','${phase.color}')">
+          <div class="task-cb${done?' pop':''}" id="cb-${key}">${done?'✓':''}</div>
+          <div class="task-text">${task}</div>
+          ${isProject?`<span class="task-badge" style="background:${phase.bg};color:${phase.color}">project</span>`:''}
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function renderCompanies(){
+  const grid = document.getElementById('companies-grid');
+  COMPANIES.forEach((co,i)=>{
+    const card = document.createElement('div');
+    card.className='co-card';
+    card.style.animationDelay=(0.35+i*0.05)+'s';
+    card.innerHTML=`
+      <div><span class="co-tier" style="background:${co.tb};color:${co.tc}">${co.tier}</span></div>
+      <div class="co-name">${co.name}</div>
+      <div class="co-role" style="color:var(--muted)">${co.role}</div>
+      <div class="co-ctc" style="color:${co.tc}">${co.ctc}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function togglePhase(header){
+  const block = header.closest('.phase-block');
+  const wasOpen = block.classList.contains('open');
+  block.classList.toggle('open');
+  if(!wasOpen){
+    setTimeout(()=>{
+      block.querySelectorAll('.ph-bar').forEach(bar=>{
+        bar.style.width = bar.dataset.target+'%';
+      });
+    },50);
+  }
+}
+
+function toggleWeek(phaseId, weekN){
+  const section = document.getElementById(`week-${phaseId}-${weekN}`);
+  section.classList.toggle('open');
+}
+
+function toggleTask(key, phaseId, weekN, phaseColor){
+  STATE[key] = !STATE[key];
+  const done = STATE[key];
+
+  const row = document.getElementById('task-'+key);
+  const cb  = document.getElementById('cb-'+key);
+
+  if(done){
+    row.classList.add('done');
+    cb.innerHTML='✓';
+    cb.style.background=phaseColor;
+    cb.style.borderColor=phaseColor;
+    cb.style.color='#052e16';
+  } else {
+    row.classList.remove('done');
+    cb.innerHTML='';
+    cb.style.background='';
+    cb.style.borderColor='';
+    cb.style.color='';
+  }
+
+  saveState();
+  updateStats();
+
+  const phase = PHASES_DATA.find(p=>p.id==phaseId);
+  if(phase){
+    const totalInPhase = phase.weeks_data.reduce((s,w)=>s+w.tasks.length,0);
+    const doneInPhase  = phase.weeks_data.reduce((s,w)=>
+      s+w.tasks.filter((_,ti)=>STATE[`p${phase.id}_w${w.n}_t${ti}`]).length,0);
+    if(done && doneInPhase===totalInPhase) launchConfetti(phaseColor);
+
+    const pct = Math.round(doneInPhase/totalInPhase*100) || 0;
+    const block = document.getElementById('phase-body-'+phaseId);
+    if(block){
+      const phHeader = block.previousElementSibling;
+      const bar = phHeader.querySelector('.ph-bar');
+      const pctEl = phHeader.querySelector('.ph-pct');
+      if(bar) { bar.style.width=pct+'%'; bar.dataset.target=pct; }
+      if(pctEl) pctEl.textContent=pct+'%';
+    }
+
+    const w = phase.weeks_data.find(w=>w.n==weekN);
+    if(w){
+      const wd = w.tasks.filter((_,ti)=>STATE[`p${phase.id}_w${w.n}_t${ti}`]).length;
+      const wdEl = document.getElementById(`wk-done-${phaseId}-${weekN}`);
+      if(wdEl){
+        wdEl.textContent=`${wd}/${w.tasks.length}`;
+        wdEl.style.color = wd===w.tasks.length ? 'var(--green)' : '';
+      }
+    }
+  }
+}
+
+function updateStats(){
+  const totalTasks = PHASES_DATA.reduce((s,p)=>s+p.weeks_data.reduce((ss,w)=>ss+w.tasks.length,0),0);
+  const doneTasks  = Object.values(STATE).filter(Boolean).length;
+  const pct = Math.round(doneTasks/totalTasks*100) || 0;
+
+  animateNum('stat-done', doneTasks, '#a78bfa');
+
+  const weeksStarted = new Set(
+    Object.keys(STATE).filter(k=>STATE[k]).map(k=>k.match(/_w(\d+)_/)?.[1])
+  ).size;
+  animateNum('stat-weeks', weeksStarted, '#34d399');
+
+  document.getElementById('stat-pct').textContent = pct+'%';
+  document.getElementById('overall-progress-text').textContent =
+    `${doneTasks} / ${totalTasks} tasks completed`;
+
+  const ring = document.getElementById('ring-circle');
+  const circumference = 314;
+  ring.style.strokeDashoffset = circumference - (pct/100*circumference);
+  ring.style.stroke = pct>=80?'#4ade80':pct>=50?'#60a5fa':'#a78bfa';
+  document.getElementById('ring-pct').textContent = pct+'%';
+}
+
+function animateNum(id, target, color){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const start = parseInt(el.textContent)||0;
+  const diff  = target - start;
+  if(diff===0) return;
+  const steps = 20;
+  let step = 0;
+  const timer = setInterval(()=>{
+    step++;
+    el.textContent = Math.round(start + diff*(step/steps));
+    el.style.color = color;
+    if(step>=steps){ clearInterval(timer); el.textContent=target; }
+  }, 20);
+}
+
+function launchConfetti(color){
+  const container = document.getElementById('confetti');
+  const colors = [color,'#4ade80','#fbbf24','#f472b6','#60a5fa','#a78bfa'];
+  for(let i=0;i<60;i++){
+    const piece = document.createElement('div');
+    piece.className='confetti-piece';
+    piece.style.cssText=`
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${6+Math.random()*8}px;
+      height:${6+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-delay:${Math.random()*0.5}s;
+      animation-duration:${2+Math.random()}s;
+    `;
+    container.appendChild(piece);
+    setTimeout(()=>piece.remove(), 4000);
+  }
+}
+
+async function init(){
+  await loadState(); 
+  renderCompanies();
+  
+  const totalDone = Object.values(STATE).filter(Boolean).length;
+  if(totalDone===0){
+    const firstBlock = document.querySelector('.phase-block');
+    if(firstBlock){
+      firstBlock.classList.add('open');
+      setTimeout(()=>{
+        firstBlock.querySelectorAll('.ph-bar').forEach(b=>{ b.style.width=b.dataset.target+'%'; });
+      },300);
+    }
+  } else {
+    PHASES_DATA.forEach(phase=>{
+      const hasDone = phase.weeks_data.some(w=>
+        w.tasks.some((_,ti)=>STATE[`p${phase.id}_w${w.n}_t${ti}`]));
+      if(hasDone){
+        const block = document.querySelector(`.phase-block:nth-child(${phase.id+5})`);
+        if(block){
+          block.classList.add('open');
+          setTimeout(()=>{
+            block.querySelectorAll('.ph-bar').forEach(b=>{ b.style.width=b.dataset.target+'%'; });
+          },300);
+        }
+      }
+    });
+  }
+}
+
+init();
+</script>
+</body>
+</html>
